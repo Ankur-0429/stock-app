@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import DataPoint from './component/dataPoint'
 
-const url = 'http://localhost:5000/api/stocks/query/?symbol=TSLA'
+const url = 'https://stock-app-backend.ankurahir.repl.co/api/stocks/query?symbol=aapl'
 
 function App() {
 
