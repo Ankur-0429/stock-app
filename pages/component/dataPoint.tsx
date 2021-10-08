@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Line } from "react-chartjs-2"
 
 
@@ -13,16 +13,15 @@ const grabArr = (data) => {
 }
 
 
-const DataPoint = ({ data }: any) => {
-
+const DataPoint = ({ data, theme }: any) => {
 
   let temp = grabArr(data)
   const labelArr = temp[0]
   const labelD = temp[1]
-  let color = 'green'
+  let color:boolean = true
   
   if (labelD[0] > labelD[labelD.length-1]) {
-    color = 'red'
+    color = false
   }
 
   let LabelSymbol = ''
@@ -32,38 +31,61 @@ const DataPoint = ({ data }: any) => {
   else {
     LabelSymbol = data[0].symbol
   }
+
+  const darkGreen = '#2E8B57'
+  const lightGreen = '#66FF00'
+  const green = theme ? darkGreen : lightGreen
+  const red = '#FF0000'
+
   const graph = {
 
-    labels: labelArr,
-
-    datasets: [
-      {
-        label: LabelSymbol,
-        fill: false,
-        lineTension: 0,
-        backgroundColor: color,
-        borderColor: color,
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: color,
-        pointBackgroundColor: '#fff',
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: color,
-        pointHoverBorderColor: color,
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 1000,
-        data: labelD
+    data: {  
+      labels: labelArr,
+  
+      datasets: [
+        {
+          label: LabelSymbol,
+          fill: false,
+          lineTension: 0,
+          backgroundColor: color ? green:red,
+          borderColor: color ? green:red ,
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          pointBorderColor: color ? green:red ,
+          pointBackgroundColor: '#fff',
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: color ? green:red ,
+          pointHoverBorderColor: color ? green:red ,
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 1000,
+          data: labelD
+        }
+      ]
+    },
+    options: {
+      scales: {
+        x: {
+          grid: {
+            display: false
+          }
+        },
+        y: {
+          grid: {
+            color: !theme ? '#696969': '#E6E6FA'
+          }
+        }
       }
-    ]
+    }
   }
 
   return (
     <Line
-      data={graph}
+      data={graph.data}
+      options={graph.options}
     />
   )
 }
