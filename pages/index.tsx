@@ -33,6 +33,8 @@ function App() {
   const [period, setPeriod] = useState('m')
   const [data, setData] = useState([])
 
+  const years = [20,10,5,3,1]
+
   var currentYear: number = 2021
 
   // if (data !== []) {
@@ -54,10 +56,12 @@ function App() {
             <input onChange={(e) => { setSymbol(e.target.value); fetcher(e.target.value, period) }} style={inputStyle} />
           </form>
 
-          <button onClick={() => { timeSet(5) }}>5 year</button>
-          <button onClick={() => { timeSet(3) }}>3 year</button>
-          <button onClick={() => { timeSet(1) }}>1 year</button>
           <ToggleSwitch label=" " th={themeToggler} />
+        </div>
+        <div>
+            {years.map((e)=>{
+              return <button key={e} onClick={()=>timeSet(e)}>{e}Y</button>
+            })}
         </div>
         <div>
           <DataPoint data={data} theme={theme} />
