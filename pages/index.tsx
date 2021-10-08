@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "./component/globalStyles";
 import { lightTheme, darkTheme } from "./theme"
 import ToggleSwitch from './component/ToggleSwitch';
+import styles from '../styles/NavContainer.module.css'
 
 const url = 'http://localhost:5000/api/stocks/query/?symbol='
 
@@ -47,15 +48,17 @@ function App() {
   return (
     <ThemeProvider theme={theme ? lightTheme : darkTheme}>
       <GlobalStyles />
-      <ToggleSwitch label="Theme" th={themeToggler} />
       <main className='App'>
-        <form>
-          <input onChange={(e) => { setSymbol(e.target.value); fetcher(e.target.value, period) }} style={inputStyle} />
-        </form>
+        <div className={styles.container}>
+          <form>
+            <input onChange={(e) => { setSymbol(e.target.value); fetcher(e.target.value, period) }} style={inputStyle} />
+          </form>
 
-        <button onClick={() => { timeSet(5) }}>5 year</button>
-        <button onClick={() => { timeSet(3) }}>3 year</button>
-        <button onClick={() => { timeSet(1) }}>1 year</button>
+          <button onClick={() => { timeSet(5) }}>5 year</button>
+          <button onClick={() => { timeSet(3) }}>3 year</button>
+          <button onClick={() => { timeSet(1) }}>1 year</button>
+          <ToggleSwitch label=" " th={themeToggler} />
+        </div>
         <div>
           <DataPoint data={data} theme={theme} />
         </div>

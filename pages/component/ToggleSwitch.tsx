@@ -1,16 +1,16 @@
 import React from "react";
-import '../../styles/ToggleSwitch.module.css'
+import styles from '../../styles/ToggleSwitch.module.css'
 
 const ToggleSwitch = ({label, th}) => {
     return (
-    <div className="container">
+    <div className={styles.container}>
         {label}{" "}
-        <div className="toggle-switch">
-            <input type="checkbox" className="checkbox"
+        <div className={styles.toggleSwitch}>
+            <input type="checkbox" className={styles.checkbox}
                 name={label} id={label}  onClick={th} />
-            <label className="label" htmlFor={label}>
-                <span className="inner" />
-                <span className="switch" />
+            <label className={styles.label} htmlFor={label}>
+                <span className={styles.inner} />
+                <span className={styles.switch} />
             </label>
         </div>
     </div>

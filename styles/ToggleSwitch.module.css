@@ -1,7 +1,7 @@
 .container {
   text-align: center;
 }
-.toggle-switch {
+.toggleSwitch {
   position: relative;
   width: 75px;
   display: inline-block;
@@ -36,15 +36,15 @@
   box-sizing: border-box;
 }
 .inner:before {
-  content: "YES";
+  content: "🌜";
   padding-left: 10px;
-  background-color: #060;
+  background-color: #191970;
   color: #fff;
 }
 .inner:after {
-  content: "NO";
+  content: "🌞";
   padding-right: 10px;
-  background-color: #bbb;
+  background-color: #87CEEB;
   color: #fff;
   text-align: right;
 }
