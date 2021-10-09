@@ -6,7 +6,7 @@ import { lightTheme, darkTheme } from "../component/theme"
 import ToggleSwitch from '../component/ToggleSwitch';
 import styles from '../styles/NavContainer.module.css'
 
-const url = 'http://localhost:5000/api/stocks/'
+const url = 'https://stock-app-backend.ankurahir.repl.co/api/stocks/'
 
 const inputStyle: CSSProperties = {
   marginTop: '10px',
