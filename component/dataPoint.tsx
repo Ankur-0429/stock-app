@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Line } from "react-chartjs-2"
 
 
@@ -32,7 +32,7 @@ const DataPoint = ({ data, theme }: any) => {
     LabelSymbol = data[0].symbol
   }
 
-  const darkGreen = '#2E8B57'
+  const darkGreen = '#009D00'
   const lightGreen = '#66FF00'
   const green = theme ? darkGreen : lightGreen
   const red = '#FF0000'

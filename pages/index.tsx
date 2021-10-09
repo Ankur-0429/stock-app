@@ -1,9 +1,9 @@
 import React, { CSSProperties, useState } from 'react'
-import DataPoint from './component/dataPoint'
+import DataPoint from '../component/dataPoint'
 import { ThemeProvider } from "styled-components";
-import { GlobalStyles } from "./component/globalStyles";
-import { lightTheme, darkTheme } from "./theme"
-import ToggleSwitch from './component/ToggleSwitch';
+import { GlobalStyles } from "../component/globalStyles";
+import { lightTheme, darkTheme } from "../component/theme"
+import ToggleSwitch from '../component/ToggleSwitch';
 import styles from '../styles/NavContainer.module.css'
 
 const url = 'http://localhost:5000/api/stocks/'
@@ -30,7 +30,7 @@ function App() {
   const [symbol, setSymbol] = useState('aapl')
   const [data, setData] = useState([])
 
-  const years = [20,10,5,3,1]
+  const years = [100,50,20,10,5,3,1]
 
   var currentYear: number = 2021
 
