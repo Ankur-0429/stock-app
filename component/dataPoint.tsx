@@ -65,7 +65,6 @@ const DataPoint = ({ data, theme }: any) => {
   const red = '#FF0000'
   const ruby = '#E0115F'
   const lime = '#11E092'
-  colorIndex = 2
   // If we ever want to add more colors we can easily expand this
   const colorpairs = [[lightGreen, darkGreen], [ruby, red], [red, red]]
 
@@ -79,27 +78,29 @@ const DataPoint = ({ data, theme }: any) => {
         {
           label: labelSymbol,
           fill: false,
-          lineTension: 0,
+          lineTension: 0.1,
           backgroundColor: themeColor,
           borderColor: themeColor,
           borderCapStyle: 'butt',
           borderDash: [],
           borderDashOffset: 0.0,
           borderJoinStyle: 'miter',
+          borderWidth: 2,
           pointBorderColor: themeColor,
           pointBackgroundColor: themeColor,
           pointBorderWidth: 1,
-          pointHoverRadius: 5,
+          pointHoverRadius: 2,
           pointHoverBackgroundColor: themeColor,
           pointHoverBorderColor: themeColor,
           pointHoverBorderWidth: 2,
-          pointRadius: 1,
+          pointRadius: 0.1,
           pointHitRadius: 1000,
           data: labelD
         }
       ]
     },
     options: {
+      maintainAspectRatio: false,
       scales: {
         x: {
           grid: {

@@ -35,13 +35,13 @@
   box-sizing: border-box;
 }
 .inner:before {
-  content: "";
+  content: "🌜";
   padding-left: 15px;
   background-color: #191970;
   color: #fff;
 }
 .inner:after {
-  content: "";
+  content: "🌞";
   padding-right: 15px;
   background-color: #87CEEB;
   color: #fff;
