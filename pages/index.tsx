@@ -1,6 +1,6 @@
 /**
  *  # index.tsx
- *  This is driver file to display the chart and the inputs
+ *  This is driver file to define where our chart and inputs are
  *  
  *  ## Authors
  *  - Ankur Ahir
@@ -32,9 +32,8 @@ const container: CSSProperties = {
 
 
 /**
+ * This is the driver function that locates where our chart, buttons, and input is.
  * 
- * 
- * @returns data sorted by closing price and date
  * 
  */
 function App() {
