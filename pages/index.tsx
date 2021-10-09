@@ -6,7 +6,7 @@ import { lightTheme, darkTheme } from "./theme"
 import ToggleSwitch from './component/ToggleSwitch';
 import styles from '../styles/NavContainer.module.css'
 
-const url = 'http://localhost:5000/api/stocks/query/?symbol='
+const url = 'http://localhost:5000/api/stocks/'
 
 const inputStyle: CSSProperties = {
   marginTop: '10px',
@@ -21,18 +21,13 @@ const container: CSSProperties = {
 let arr = []
 function App() {
 
-  const fetcher = (symbol, period) => {
-    fetch(url + symbol + "&period=" + period)
+  const fetcher = (symbol, year) => {
+    fetch(url + year + "/query?symbol=" + symbol)
       .then(res => res.json())
       .then(data => { setData(data); arr = [...data] })
   }
 
-  const timeSet = (yearDiff: number) => {
-    setData(arr.filter((e) => currentYear - parseInt(e.date.substring(0, 4)) <= yearDiff))
-  }
-
   const [symbol, setSymbol] = useState('aapl')
-  const [period, setPeriod] = useState('m')
   const [data, setData] = useState([])
 
   const years = [20,10,5,3,1]
@@ -56,11 +51,13 @@ function App() {
         <div className={styles.container}>
           <div style={container}>
             <form>
-              <input onChange={(e) => { setSymbol(e.target.value); fetcher(e.target.value, period) }} style={inputStyle} />
+              <input onChange={(e) => {
+                setSymbol(e.target.value); fetcher(e.target.value, 20) 
+              }} style={inputStyle} />
             </form>
             <div>
               {years.map((e)=>{
-                return <button key={e} onClick={()=>timeSet(e)}>{e}Y</button>
+                return <button key={e} onClick={()=>fetcher(symbol, e)}>{e}Y</button>
               })}
             </div>
           </div>
