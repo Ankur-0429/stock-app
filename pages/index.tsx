@@ -6,7 +6,7 @@ import { lightTheme, darkTheme } from "../component/theme"
 import ToggleSwitch from '../component/ToggleSwitch';
 import styles from '../styles/NavContainer.module.css'
 
-const url = 'https://stock-app-backend.ankurahir.repl.co/api/stocks/'
+const url = 'http://localhost:5000/api/stocks/'
 
 const inputStyle: CSSProperties = {
   marginTop: '10px',
@@ -20,7 +20,7 @@ const container: CSSProperties = {
 
 let arr = []
 function App() {
-
+  // Gets the symbol the price range from the specified year from our backend
   const fetcher = (symbol, year) => {
     fetch(url + year + "/query?symbol=" + symbol)
       .then(res => res.json())
@@ -43,23 +43,29 @@ function App() {
     setTheme(!theme)
   }
 
-
+  console.log(theme)
   return (
+    // Selects between light and dark themes based on a slider button
     <ThemeProvider theme={theme ? lightTheme : darkTheme}>
       <GlobalStyles />
+      
       <main className='App'>
         <div className={styles.container}>
           <div style={container}>
+            {/* Input the stock ticker to the graph and the year range*/}
             <form>
-              <input onChange={(e) => {
-                setSymbol(e.target.value); fetcher(e.target.value, 20) 
+              <input onChange={(ticker) => {
+                setSymbol(ticker.target.value); fetcher(ticker.target.value, 20) 
               }} style={inputStyle} />
             </form>
+
+            {/* Creates a set of buttons that set the range of the graph */}
             <div>
-              {years.map((e)=>{
-                return <button key={e} onClick={()=>fetcher(symbol, e)}>{e}Y</button>
+              {years.map((range)=>{
+                return <button key={range} onClick={()=>fetcher(symbol, range)}>{range}Y</button>
               })}
             </div>
+
           </div>
 
           <ToggleSwitch label=" " th={themeToggler} />

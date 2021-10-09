@@ -29,21 +29,20 @@
   float: left;
   width: 50%;
   height: 36px;
-  padding: 0;
+  padding: 1px;
   line-height: 36px;
-  color: #fff;
   font-weight: bold;
   box-sizing: border-box;
 }
 .inner:before {
-  content: "🌜";
-  padding-left: 10px;
+  content: "";
+  padding-left: 15px;
   background-color: #191970;
   color: #fff;
 }
 .inner:after {
-  content: "🌞";
-  padding-right: 10px;
+  content: "";
+  padding-right: 15px;
   background-color: #87CEEB;
   color: #fff;
   text-align: right;
@@ -52,7 +51,7 @@
   display: block;
   width: 24px;
   margin: 5px;
-  background: #fff;
+  background: #F9D71C;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -66,4 +65,5 @@
 }
 .checkbox:checked + .label .switch {
   right: 0px;
+  background: #F4F6F0;
 }
