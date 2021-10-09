@@ -9,11 +9,13 @@ import styles from '../styles/NavContainer.module.css'
 const url = 'http://localhost:5000/api/stocks/query/?symbol='
 
 const inputStyle: CSSProperties = {
-  padding: '10px',
-  marginLeft: '10px',
   marginTop: '10px',
-  border: '1px solid black',
+  padding: '5px',
   boxShadow: '0 0 15px 4px rgba(0,0,0,0.06)'
+}
+
+const container: CSSProperties = {
+  marginLeft: '10px',
 }
 
 let arr = []
@@ -52,16 +54,18 @@ function App() {
       <GlobalStyles />
       <main className='App'>
         <div className={styles.container}>
-          <form>
-            <input onChange={(e) => { setSymbol(e.target.value); fetcher(e.target.value, period) }} style={inputStyle} />
-          </form>
+          <div style={container}>
+            <form>
+              <input onChange={(e) => { setSymbol(e.target.value); fetcher(e.target.value, period) }} style={inputStyle} />
+            </form>
+            <div>
+              {years.map((e)=>{
+                return <button key={e} onClick={()=>timeSet(e)}>{e}Y</button>
+              })}
+            </div>
+          </div>
 
           <ToggleSwitch label=" " th={themeToggler} />
-        </div>
-        <div>
-            {years.map((e)=>{
-              return <button key={e} onClick={()=>timeSet(e)}>{e}Y</button>
-            })}
         </div>
         <div>
           <DataPoint data={data} theme={theme} />
