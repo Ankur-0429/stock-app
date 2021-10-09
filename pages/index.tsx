@@ -21,6 +21,8 @@ const container: CSSProperties = {
 let arr = []
 function App() {
 
+
+  let years = ['MAX', 20,10,5,3,1]
   const fetcher = (symbol, year) => {
     fetch(url + year + "/query?symbol=" + symbol)
       .then(res => res.json())
@@ -29,8 +31,6 @@ function App() {
 
   const [symbol, setSymbol] = useState('aapl')
   const [data, setData] = useState([])
-
-  const years = [100,50,20,10,5,3,1]
 
   var currentYear: number = 2021
 
@@ -52,11 +52,14 @@ function App() {
           <div style={container}>
             <form>
               <input onChange={(e) => {
-                setSymbol(e.target.value); fetcher(e.target.value, 20) 
+                setSymbol(e.target.value); fetcher(e.target.value, 1) 
               }} style={inputStyle} />
             </form>
             <div>
               {years.map((e)=>{
+                if(e=='MAX') {
+                  return <button key={e} onClick={()=>fetcher(symbol, 1000)}>{e}</button>
+                }
                 return <button key={e} onClick={()=>fetcher(symbol, e)}>{e}Y</button>
               })}
             </div>
