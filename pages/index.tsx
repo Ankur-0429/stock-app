@@ -1,3 +1,14 @@
+/**
+ *  # index.tsx
+ *  This is driver file to display the chart and the inputs
+ *  
+ *  ## Authors
+ *  - Ankur Ahir
+ *  - Albert Lee
+ * 
+ */
+
+
 import React, { CSSProperties, useState } from 'react'
 import DataPoint from '../component/dataPoint'
 import { ThemeProvider } from "styled-components";
@@ -18,13 +29,28 @@ const container: CSSProperties = {
   marginLeft: '10px',
 }
 
-let arr = []
+
+
+/**
+ * 
+ * 
+ * @returns data sorted by closing price and date
+ * 
+ */
 function App() {
   // Gets the symbol the price range from the specified year from our backend
+  
+  /**
+   * 
+   * @param symbol The stock ticker we want to input the display on the chart
+   * @param year The range we want to define for the chart
+   * @event res Sends a query to our backend to request the data we want
+   * 
+   */
   const fetcher = (symbol, year) => {
     fetch(url + year + "/query?symbol=" + symbol)
       .then(res => res.json())
-      .then(data => { setData(data); arr = [...data] })
+      .then(data => { setData(data); })
   }
 
   const [symbol, setSymbol] = useState('aapl')
@@ -32,18 +58,21 @@ function App() {
 
   const years = [100,50,20,10,5,3,1]
 
-  var currentYear: number = 2021
-
   // if (data !== []) {
   //   currentYear = parseInt(data[data.length-1].date.substring(0,10))
   // }
 
   const [theme, setTheme] = useState(true);
+
+  /**
+   * 
+   * @param theme Sets the theme we want to use for our webpage
+   * 
+   */
   const themeToggler = () => {
     setTheme(!theme)
   }
 
-  console.log(theme)
   return (
     // Selects between light and dark themes based on a slider button
     <ThemeProvider theme={theme ? lightTheme : darkTheme}>
@@ -67,7 +96,7 @@ function App() {
             </div>
 
           </div>
-
+          {/* The toggle switch for selecting between light and dark mode */}
           <ToggleSwitch label=" " th={themeToggler} />
         </div>
         <div>
