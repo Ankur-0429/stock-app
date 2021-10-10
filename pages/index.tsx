@@ -66,7 +66,6 @@ function App() {
   const [data, setData] = useState([])
   const [input, setInput] = useState('')
 
-<<<<<<< HEAD
   const years = [20, 10, 5, 3, 1]
   const lightBlue = "#87CEEB"
   const darkBlue = "#3700B3"
@@ -74,21 +73,6 @@ function App() {
   const [theme, setTheme] = useState(true);
   const blue = theme ? lightBlue : darkBlue
 
-=======
-  const years = [100,50,20,10,5,3,1]
-
-  // if (data !== []) {
-  //   currentYear = parseInt(data[data.length-1].date.substring(0,10))
-  // }
-
-  const [theme, setTheme] = useState(true);
-
-  /**
-   * 
-   * @param theme Sets the theme we want to use for our webpage
-   * 
-   */
->>>>>>> d07c4b30e9209bffc2b6e808dc48e553d14edac2
   const themeToggler = () => {
     setTheme(!theme)
   }
