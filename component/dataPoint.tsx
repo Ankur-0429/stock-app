@@ -32,9 +32,6 @@ const grabArr = (data) => {
   return [labelArr.reverse(), labelD.reverse()]
 }
 
-/** @internal */
-const secret = 'Ankur is gay'
-
 /**
  * 
  * @param data the cleaned data given by grabArr
