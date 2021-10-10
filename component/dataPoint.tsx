@@ -38,7 +38,7 @@ const grabArr = (data) => {
  * @param theme a boolean that deterimines if theme is dark mode or light mode and selects the colors
  * @returns the cleaned data and the options for Chart.js
  */
-const DataPoint = ({ data, theme }: any) => {
+const DataPoint = ({ data, theme, log }: any) => {
   let temp = grabArr(data)
   const labelArr = temp[0]
   const labelD = temp[1]
@@ -55,7 +55,7 @@ const DataPoint = ({ data, theme }: any) => {
   else {
     labelSymbol = data[0].symbol
   }
-
+  const volData = [40,42,45,32,4,5,1,2,4,5,6,66,23,44,12,44,66]
   // Here we can define the colors we want to display
   const darkGreen = '#009D00'
   const lightGreen = '#66FF00'
@@ -73,6 +73,15 @@ const DataPoint = ({ data, theme }: any) => {
       labels: labelArr,
 
       datasets: [
+        {
+          label: "Volume",
+          data: volData,
+          borderColor: red,
+          backgroundColor: red,
+          type: 'bar',
+          order: 2,
+          yAxisID: 'volume',
+        },
         {
           label: labelSymbol,
           fill: false,
@@ -92,21 +101,45 @@ const DataPoint = ({ data, theme }: any) => {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 1000,
-          data: labelD
+          data: labelD,
+          order: 1,
+          yAxisID: 'y',
         }
+        
       ]
     },
     options: {
+      interaction: {
+        axis: 'x'
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: "stonks",
+        },
+      },
       scales: {
         x: {
           grid: {
             display: false
           }
         },
+
         y: {
+          type: "linear",
           grid: {
             color: !theme ? '#696969' : '#E6E6FA'
-          }
+          },
+          stacked: false,
+        },
+
+        volume: {
+          type: "linear",
+          display: true,
+          position: 'right',
+          min: Math.min(...volData),
+          max: Math.max(...volData)*2,
+
         }
       }
     }
