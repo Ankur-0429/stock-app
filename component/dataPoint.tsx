@@ -12,7 +12,6 @@
  * 
  */
 
-
 import React from 'react';
 import { Line } from "react-chartjs-2"
 
@@ -42,6 +41,10 @@ const DataPoint = ({ data, theme, log }: any) => {
   let temp = grabArr(data)
   const labelArr = temp[0]
   const labelD = temp[1]
+  const percentChange = Math.round(((labelD[labelD.length - 1] - labelD[0]) / labelD[labelD.length - 1]) * 100)
+  let ifNaN = isNaN(percentChange)
+  let ifPositive = percentChange > 0
+  let positive = ifPositive ? '+' : ''
   let colorIndex = 0
 
   if (labelD[0] > labelD[labelD.length - 1]) {
@@ -62,7 +65,6 @@ const DataPoint = ({ data, theme, log }: any) => {
   const red = '#FF0000'
   const ruby = '#E0115F'
   const lime = '#11E092'
-
   // If we ever want to add more colors we can easily expand this
   const colorpairs = [[lightGreen, darkGreen], [ruby, red], [red, red]]
 
@@ -92,10 +94,11 @@ const DataPoint = ({ data, theme, log }: any) => {
           borderDash: [],
           borderDashOffset: 0.0,
           borderJoinStyle: 'miter',
+          borderWidth: 2,
           pointBorderColor: themeColor,
           pointBackgroundColor: themeColor,
           pointBorderWidth: 1,
-          pointHoverRadius: 5,
+          pointHoverRadius: 2,
           pointHoverBackgroundColor: themeColor,
           pointHoverBorderColor: themeColor,
           pointHoverBorderWidth: 2,
@@ -120,6 +123,9 @@ const DataPoint = ({ data, theme, log }: any) => {
       },
       scales: {
         x: {
+          ticks: {
+            display: false,
+          },
           grid: {
             display: false
           }
@@ -146,10 +152,12 @@ const DataPoint = ({ data, theme, log }: any) => {
   }
 
   return (
-    <Line
-      data={graph.data}
-      options={graph.options}
-    />
+    <div style={{ height: "70vh" }}>
+      <Line
+        data={graph.data}
+        options={graph.options}
+      />
+    </div>
   )
 }
 

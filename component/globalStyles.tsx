@@ -1,10 +1,10 @@
 /**
- *  # ToggleSwitch.tsx
- *  This program defines the theme toggle switch. So the user can change between light and dark mode
+ *  # globalStyles.tsx
+ *  Defines the css style for our webpage
  *  
  *  ## Authors
  *  - Ankur Ahir
- *  
+ *  - Albert Lee
  */
 
 import { createGlobalStyle} from "styled-components"
