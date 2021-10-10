@@ -119,7 +119,7 @@ const DataPoint = ({ data, theme }: any) => {
             display: true,
           },
           grid: {
-            color: !theme ? '#696969' : '#909090'
+            color: theme ? '#909090' : '#696969'
           }
         }
       }
