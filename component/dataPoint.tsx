@@ -94,7 +94,7 @@ const DataPoint = ({ data, theme }: any) => {
           pointHoverBorderColor: themeColor,
           pointHoverBorderWidth: 2,
           pointRadius: 0.1,
-          pointHitRadius: 1000,
+          pointHitRadius: 5,
           data: labelD
         }
       ]
@@ -103,11 +103,17 @@ const DataPoint = ({ data, theme }: any) => {
       maintainAspectRatio: false,
       scales: {
         x: {
+          ticks: {
+            display: false,
+          },
           grid: {
             display: false
           }
         },
         y: {
+          ticks: {
+            display: false,
+          },
           grid: {
             color: !theme ? '#696969' : '#E6E6FA'
           }
@@ -117,10 +123,12 @@ const DataPoint = ({ data, theme }: any) => {
   }
 
   return (
-    <Line
-      data={graph.data}
-      options={graph.options}
-    />
+    <div style={{height: "300px"}}>
+      <Line
+        data={graph.data}
+        options={graph.options}
+      />
+    </div>
   )
 }
 

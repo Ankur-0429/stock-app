@@ -3,8 +3,12 @@ import DataPoint from '../component/dataPoint'
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "../component/globalStyles";
 import { lightTheme, darkTheme } from "../component/theme"
-import ToggleSwitch from '../component/ToggleSwitch';
+import buttonStyle from '../styles/yearButton.module.css'
+import ToggleSwitch from '../component/toggleSwitch';
 import styles from '../styles/NavContainer.module.css'
+import SearchStyles from '../styles/SearchBar.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 const url = 'http://localhost:8080/api/stocks/'
 
@@ -27,18 +31,23 @@ function App() {
       .then(data => { setData(data); arr = [...data] })
   }
 
+  const handleSubmit = (e: Event) => {
+    e.preventDefault()
+    setSymbol(input)
+    fetcher(input, 20)
+  }
+
   const [symbol, setSymbol] = useState('aapl')
   const [data, setData] = useState([])
+  const [input, setInput] = useState('')
 
-  const years = [20,10,5,3,1]
-
-  var currentYear: number = 2021
-
-  // if (data !== []) {
-  //   currentYear = parseInt(data[data.length-1].date.substring(0,10))
-  // }
-
+  const years = [20, 10, 5, 3, 1]
+  const lightBlue = "#87CEEB"
+  const darkBlue = "#191970"
+  
   const [theme, setTheme] = useState(true);
+  const blue = theme ? lightBlue : darkBlue
+
   const themeToggler = () => {
     setTheme(!theme)
   }
@@ -48,21 +57,41 @@ function App() {
     // Selects between light and dark themes based on a slider button
     <ThemeProvider theme={theme ? lightTheme : darkTheme}>
       <GlobalStyles />
-      
+
       <main className='App'>
         <div className={styles.container}>
           <div style={container}>
             {/* Input the stock ticker to the graph and the year range*/}
-            <form>
-              <input onChange={(ticker) => {
-                setSymbol(ticker.target.value); fetcher(ticker.target.value, 20) 
-              }} style={inputStyle} />
+
+            {/* @ts-ignore */}
+            <form onSubmit={handleSubmit}>
+              <div className={SearchStyles.wrap}>
+                <div className={SearchStyles.search}>
+                  <input
+                    placeholder="Stock Ticker"
+                    type="text"
+                    value={input}
+                    onInput={(e) => setInput((e.target as HTMLTextAreaElement).value)}
+                    className={SearchStyles.searchTerm}
+                    style={{border: `3px solid ${blue}`}}
+                    id="input_text"
+                  ></input>
+                  <button 
+                    type="submit" 
+                    className={SearchStyles.searchButton}
+                    style={{border: `1px solid ${blue}`, background: `${blue}`}}
+                  >
+                    <FontAwesomeIcon icon={faSearch} />
+                  </button>
+                </div>
+              </div>
             </form>
+
 
             {/* Creates a set of buttons that set the range of the graph */}
             <div>
-              {years.map((range)=>{
-                return <button key={range} onClick={()=>fetcher(symbol, range)}>{range}Y</button>
+              {years.map((range) => {
+                return <button className={buttonStyle.yearButton} style={{backgroundColor: `${blue}`}} key={range} onClick={() => fetcher(symbol, range)}>{range}Y</button>
               })}
             </div>
 

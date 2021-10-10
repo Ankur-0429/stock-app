@@ -1,3 +1,8 @@
+.inner {
+  --dark-blue: #191970;
+  --light-blue: #87CEEB;
+}
+
 .container {
   text-align: center;
 }
@@ -37,13 +42,13 @@
 .inner:before {
   content: "🌜";
   padding-left: 15px;
-  background-color: #191970;
+  background-color: var(--dark-blue);
   color: #fff;
 }
 .inner:after {
   content: "🌞";
   padding-right: 15px;
-  background-color: #87CEEB;
+  background-color: var(--light-blue);
   color: #fff;
   text-align: right;
 }
