@@ -1,3 +1,14 @@
+/**
+ *  # index.tsx
+ *  This is driver file to define where our chart and inputs are
+ *  
+ *  ## Authors
+ *  - Ankur Ahir
+ *  - Albert Lee
+ * 
+ */
+
+
 import React, { CSSProperties, useState } from 'react'
 import DataPoint from '../component/dataPoint'
 import { ThemeProvider } from "styled-components";
@@ -22,13 +33,27 @@ const container: CSSProperties = {
   marginLeft: '10px',
 }
 
-let arr = []
+
+
+/**
+ * This is the driver function that locates where our chart, buttons, and input is.
+ * 
+ * 
+ */
 function App() {
   // Gets the symbol the price range from the specified year from our backend
+  
+  /**
+   * 
+   * @param symbol The stock ticker we want to input the display on the chart
+   * @param year The range we want to define for the chart
+   * @event res Sends a query to our backend to request the data we want
+   * 
+   */
   const fetcher = (symbol, year) => {
     fetch(url + year + "/query?symbol=" + symbol)
       .then(res => res.json())
-      .then(data => { setData(data); arr = [...data] })
+      .then(data => { setData(data); })
   }
 
   const handleSubmit = (e: Event) => {
@@ -41,6 +66,7 @@ function App() {
   const [data, setData] = useState([])
   const [input, setInput] = useState('')
 
+<<<<<<< HEAD
   const years = [20, 10, 5, 3, 1]
   const lightBlue = "#87CEEB"
   const darkBlue = "#3700B3"
@@ -48,6 +74,21 @@ function App() {
   const [theme, setTheme] = useState(true);
   const blue = theme ? lightBlue : darkBlue
 
+=======
+  const years = [100,50,20,10,5,3,1]
+
+  // if (data !== []) {
+  //   currentYear = parseInt(data[data.length-1].date.substring(0,10))
+  // }
+
+  const [theme, setTheme] = useState(true);
+
+  /**
+   * 
+   * @param theme Sets the theme we want to use for our webpage
+   * 
+   */
+>>>>>>> d07c4b30e9209bffc2b6e808dc48e553d14edac2
   const themeToggler = () => {
     setTheme(!theme)
   }
@@ -86,7 +127,7 @@ function App() {
               </div>
             </form>
           </div>
-
+          {/* The toggle switch for selecting between light and dark mode */}
           <ToggleSwitch label=" " th={themeToggler} />
         </div>
         <div>
