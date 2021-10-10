@@ -29,8 +29,6 @@ const container: CSSProperties = {
   marginLeft: '10px',
 }
 
-
-
 /**
  * This is the driver function that locates where our chart, buttons, and input is.
  * 
