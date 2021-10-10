@@ -3,8 +3,8 @@
  *  This program defines the theme toggle switch. So the user can change between light and dark mode
  *  
  *  ## Authors
- *  - Main Author: Ankur Ahir
- *  
+ *  - Ankur Ahir
+ *  - Albert Lee
  */
 
 import React from "react";
