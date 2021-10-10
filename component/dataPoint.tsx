@@ -45,7 +45,6 @@ const DataPoint = ({ data, theme }: any) => {
   const labelArr = temp[0]
   const labelD = temp[1]
   const percentChange = Math.round(((labelD[labelD.length - 1] - labelD[0]) / labelD[labelD.length - 1]) * 100)
-  console.log(percentChange)
   let ifNaN = isNaN(percentChange)
   let ifPositive = percentChange > 0
   let positive = ifPositive ? '+' : ''
