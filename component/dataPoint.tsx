@@ -6,7 +6,7 @@
  *  - Main Author: Ankur Ahir
  *  - Co Author: Albert Lee
  * 
- * 
+ *  
  * 
  *
  * 
@@ -79,7 +79,7 @@ const DataPoint = ({ data, theme }: any) => {
         {
           label: labelSymbol,
           fill: false,
-          lineTension: 0,
+          lineTension: 0.1,
           backgroundColor: themeColor,
           borderColor: themeColor,
           borderCapStyle: 'butt',
