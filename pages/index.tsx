@@ -43,8 +43,8 @@ function App() {
 
   const years = [20, 10, 5, 3, 1]
   const lightBlue = "#87CEEB"
-  const darkBlue = "#191970"
-  
+  const darkBlue = "#3700B3"
+
   const [theme, setTheme] = useState(true);
   const blue = theme ? lightBlue : darkBlue
 
@@ -52,7 +52,6 @@ function App() {
     setTheme(!theme)
   }
 
-  console.log(theme)
   return (
     // Selects between light and dark themes based on a slider button
     <ThemeProvider theme={theme ? lightTheme : darkTheme}>
@@ -73,34 +72,37 @@ function App() {
                     value={input}
                     onInput={(e) => setInput((e.target as HTMLTextAreaElement).value)}
                     className={SearchStyles.searchTerm}
-                    style={{border: `3px solid ${blue}`}}
+                    style={{ border: `3px solid ${blue}` }}
                     id="input_text"
                   ></input>
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className={SearchStyles.searchButton}
-                    style={{border: `1px solid ${blue}`, background: `${blue}`}}
+                    style={{ border: `1px solid ${blue}`, background: `${blue}` }}
                   >
                     <FontAwesomeIcon icon={faSearch} />
                   </button>
                 </div>
               </div>
             </form>
-
-
-            {/* Creates a set of buttons that set the range of the graph */}
-            <div>
-              {years.map((range) => {
-                return <button className={buttonStyle.yearButton} style={{backgroundColor: `${blue}`}} key={range} onClick={() => fetcher(symbol, range)}>{range}Y</button>
-              })}
-            </div>
-
           </div>
 
           <ToggleSwitch label=" " th={themeToggler} />
         </div>
         <div>
           <DataPoint data={data} theme={theme} />
+        </div>
+        {/* Creates a set of buttons that set the range of the graph */}
+        <div className={styles.container}>
+          {years.map((range) => {
+            return <button
+              className={buttonStyle.yearButton}
+              style={{ color: blue }}
+              key={range}
+              onClick={() => fetcher(symbol, range)}>
+              {range}Y
+            </button>
+          })}
         </div>
       </main>
     </ThemeProvider>

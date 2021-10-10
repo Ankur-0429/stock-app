@@ -12,7 +12,6 @@
  * 
  */
 
-
 import React from 'react';
 import { Line } from "react-chartjs-2"
 
@@ -45,6 +44,11 @@ const DataPoint = ({ data, theme }: any) => {
   let temp = grabArr(data)
   const labelArr = temp[0]
   const labelD = temp[1]
+  const percentChange = Math.round(((labelD[labelD.length - 1] - labelD[0]) / labelD[labelD.length - 1]) * 100)
+  console.log(percentChange)
+  let ifNaN = isNaN(percentChange)
+  let ifPositive = percentChange > 0
+  let positive = ifPositive ? '+' : ''
   let colorIndex = 0
 
   if (labelD[0] > labelD[labelD.length - 1]) {
@@ -76,7 +80,7 @@ const DataPoint = ({ data, theme }: any) => {
 
       datasets: [
         {
-          label: labelSymbol,
+          label: labelSymbol + (ifNaN ? '' : ` (${positive}${percentChange}%)`),
           fill: false,
           lineTension: 0.1,
           backgroundColor: themeColor,
@@ -112,10 +116,10 @@ const DataPoint = ({ data, theme }: any) => {
         },
         y: {
           ticks: {
-            display: false,
+            display: true,
           },
           grid: {
-            color: !theme ? '#696969' : '#E6E6FA'
+            color: !theme ? '#696969' : '#909090'
           }
         }
       }
@@ -123,7 +127,7 @@ const DataPoint = ({ data, theme }: any) => {
   }
 
   return (
-    <div style={{height: "300px"}}>
+    <div style={{ height: "70vh" }}>
       <Line
         data={graph.data}
         options={graph.options}
