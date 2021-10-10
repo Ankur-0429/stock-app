@@ -68,10 +68,6 @@ const DataPoint = ({ data, theme }: any) => {
   const red = '#FF0000'
   const ruby = '#E0115F'
   const lime = '#11E092'
-<<<<<<< HEAD
-=======
-
->>>>>>> d07c4b30e9209bffc2b6e808dc48e553d14edac2
   // If we ever want to add more colors we can easily expand this
   const colorpairs = [[lightGreen, darkGreen], [ruby, red], [red, red]]
 
