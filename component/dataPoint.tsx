@@ -6,10 +6,6 @@
  *  - Main Author: Ankur Ahir
  *  - Co Author: Albert Lee
  * 
- *  
- * 
- *
- * 
  */
 
 import React from 'react';
@@ -24,11 +20,13 @@ import { Line } from "react-chartjs-2"
 const grabArr = (data) => {
   let labelArr = []
   let labelD = []
+  let labelV = []
   for (let i = 0; i < data.length; i++) {
     labelArr.push(data[i].date.substring(0, 10))
     labelD.push(data[i].open)
+    labelV.push(data[i].volume)
   }
-  return [labelArr.reverse(), labelD.reverse()]
+  return [labelArr.reverse(), labelD.reverse(), labelV.reverse()]
 }
 
 /**
@@ -41,6 +39,7 @@ const DataPoint = ({ data, theme, log }: any) => {
   let temp = grabArr(data)
   const labelArr = temp[0]
   const labelD = temp[1]
+  const labelV = temp[2]
   const percentChange = Math.round(((labelD[labelD.length - 1] - labelD[0]) / labelD[labelD.length - 1]) * 100)
   let ifNaN = isNaN(percentChange)
   let ifPositive = percentChange > 0
@@ -77,7 +76,7 @@ const DataPoint = ({ data, theme, log }: any) => {
       datasets: [
         {
           label: "Volume",
-          data: volData,
+          data: labelV,
           borderColor: red,
           backgroundColor: red,
           type: 'bar',
@@ -143,8 +142,8 @@ const DataPoint = ({ data, theme, log }: any) => {
           type: "linear",
           display: true,
           position: 'right',
-          min: Math.min(...volData),
-          max: Math.max(...volData)*2,
+          min: Math.min(...labelV),
+          max: Math.max(...labelV)*3,
 
         }
       }
