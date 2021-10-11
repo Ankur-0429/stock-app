@@ -75,7 +75,6 @@ const DataPoint = ({ data, theme, log }: any) => {
 
       datasets: [
         {
-          label: "Volume",
           data: labelV,
           borderColor: red,
           backgroundColor: red,

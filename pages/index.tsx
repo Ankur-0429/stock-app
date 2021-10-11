@@ -21,7 +21,7 @@ import SearchStyles from '../styles/SearchBar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-const url = 'http://localhost:5005/'
+const url = 'http://localhost:5005/api/stocks/'
 
 const inputStyle: CSSProperties = {
   marginTop: '10px',
@@ -34,6 +34,7 @@ const container: CSSProperties = {
 }
 
 /**
+ * 
  * This is the driver function that locates where our chart, buttons, and input is.
  * 
  * 
