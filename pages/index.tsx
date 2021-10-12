@@ -56,6 +56,11 @@ function App() {
       .then(data => { setData(data); })
   }
 
+    /**
+   * 
+   * @param e The event object used to handle button output for timeline
+   * 
+   */
   const handleSubmit = (e: Event) => {
     e.preventDefault()
     setSymbol(input)
