@@ -21,7 +21,7 @@ import SearchStyles from '../styles/SearchBar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-const url = 'https://stock-app-alpha.vercel.app/'
+const url = process.env.NEXT_PUBLIC_URL
 
 const inputStyle: CSSProperties = {
   marginTop: '10px',

@@ -24,11 +24,13 @@ import { Line } from "react-chartjs-2"
 const grabArr = (data) => {
   let labelArr = []
   let labelD = []
+  let labelV = []
   for (let i = 0; i < data.length; i++) {
     labelArr.push(data[i].date.substring(0, 10))
     labelD.push(data[i].open)
+    labelV.push(data[i].volume)
   }
-  return [labelArr.reverse(), labelD.reverse()]
+  return [labelArr.reverse(), labelD.reverse(), labelV.reverse()]
 }
 
 /**
@@ -41,6 +43,8 @@ const DataPoint = ({ data, theme, log }: any) => {
   let temp = grabArr(data)
   const labelArr = temp[0]
   const labelD = temp[1]
+  const labelV = temp[2]
+
   const percentChange = Math.round(((labelD[labelD.length - 1] - labelD[0]) / labelD[labelD.length - 1]) * 100)
   let ifNaN = isNaN(percentChange)
   let ifPositive = percentChange > 0
@@ -58,13 +62,12 @@ const DataPoint = ({ data, theme, log }: any) => {
   else {
     labelSymbol = data[0].symbol
   }
-  const volData = [40,42,45,32,4,5,1,2,4,5,6,66,23,44,12,44,66]
   // Here we can define the colors we want to display
   const darkGreen = '#009D00'
   const lightGreen = '#66FF00'
   const red = '#FF0000'
   const ruby = '#E0115F'
-  const lime = '#11E092'
+  // const lime = '#11E092'
   // If we ever want to add more colors we can easily expand this
   const colorpairs = [[lightGreen, darkGreen], [ruby, red], [red, red]]
 
@@ -77,7 +80,7 @@ const DataPoint = ({ data, theme, log }: any) => {
       datasets: [
         {
           label: "Volume",
-          data: volData,
+          data: labelV,
           borderColor: red,
           backgroundColor: red,
           type: 'bar',
@@ -143,8 +146,8 @@ const DataPoint = ({ data, theme, log }: any) => {
           type: "linear",
           display: true,
           position: 'right',
-          min: Math.min(...volData),
-          max: Math.max(...volData)*2,
+          min: Math.min(...labelV),
+          max: Math.max(...labelV)*4,
 
         }
       }
