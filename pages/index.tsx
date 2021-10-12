@@ -20,8 +20,8 @@ import styles from '../styles/NavContainer.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-let url = process.env.NEXT_PUBLIC_URL
-console.log(url)
+const url = process.env.NEXT_PUBLIC_URL
+const buttonPadding = "100px"
 
 const inputStyle: CSSProperties = {
   marginTop: '10px',
@@ -32,8 +32,6 @@ const inputStyle: CSSProperties = {
 const container: CSSProperties = {
   marginLeft: '10px',
 }
-
-
 
 /**
  * This is the driver function that locates where our chart, buttons, and input is.
@@ -105,7 +103,7 @@ function App() {
           <DataPoint data={data} theme={theme} />
         </div>
         {/* Creates a set of buttons that set the range of the graph */}
-        <div className={styles.container}>
+        <div className={styles.container} style={{paddingLeft: `${buttonPadding}`, paddingRight: `${buttonPadding}`, fontSize: "large"}}>
           {years.map((range) => {
             return <button
               className={buttonStyle.yearButton}

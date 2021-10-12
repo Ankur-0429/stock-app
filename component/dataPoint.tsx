@@ -12,8 +12,9 @@
  * 
  */
 
+import { faLevelUpAlt } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
-import { Line } from "react-chartjs-2"
+import { Bar, Line } from "react-chartjs-2"
 
 /**
  * 
@@ -24,11 +25,13 @@ import { Line } from "react-chartjs-2"
 const grabArr = (data) => {
   let labelArr = []
   let labelD = []
+  let labelV = []
   for (let i = 0; i < data.length; i++) {
     labelArr.push(data[i].date.substring(0, 10))
     labelD.push(data[i].open)
+    labelV.push(data[i].volume)
   }
-  return [labelArr.reverse(), labelD.reverse()]
+  return [labelArr.reverse(), labelD.reverse(), labelV.reverse()]
 }
 
 /** @internal */
@@ -44,6 +47,7 @@ const DataPoint = ({ data, theme }: any) => {
   let temp = grabArr(data)
   const labelArr = temp[0]
   const labelD = temp[1]
+  const labelV = temp[2]
   const percentChange = Math.round(((labelD[labelD.length - 1] - labelD[0]) / labelD[labelD.length - 1]) * 100)
   let ifNaN = isNaN(percentChange)
   let ifPositive = percentChange > 0
@@ -124,15 +128,60 @@ const DataPoint = ({ data, theme }: any) => {
       }
     }
   }
+  const graph2 = {
+    data: {
+      labels: labelArr,
 
-  return (
+      datasets: [
+        {
+          label: 'volume',
+          data: labelV,
+          borderColor: red,
+          backgroundColor: red,
+        }
+      ]
+    },
+    options: {
+      scaleShowLabels: false,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          ticks: {
+            display: false,
+          },
+          grid: {
+            display: false,
+          }
+        },
+        y: {
+          ticks: {
+            display: false,
+            scaleShowLabels: false,
+          },
+          grid: {
+            display: false,
+            color: theme ? '#909090' : '#696969'
+          }
+        }
+      }
+    }
+
+  }
+
+  return (<>
     <div style={{ height: "70vh" }}>
       <Line
         data={graph.data}
         options={graph.options}
       />
     </div>
-  )
+    <div style={{ height: "20vh", paddingLeft: '26px'}}>
+      <Bar
+        data={graph2.data}
+        options={graph2.options}
+      />
+    </div>
+  </>)
 }
 
 export default DataPoint
