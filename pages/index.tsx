@@ -20,7 +20,7 @@ import styles from '../styles/NavContainer.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
-let url = process.env.URL
+let url = process.env.NEXT_PUBLIC_URL
 console.log(url)
 
 const inputStyle: CSSProperties = {
