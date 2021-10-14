@@ -10,7 +10,6 @@
 
 
 import React, { CSSProperties, useState } from 'react'
-import DataPoint from '../component/dataPoint'
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "../component/globalStyles";
 import { lightTheme, darkTheme } from "../component/theme"
@@ -21,7 +20,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import DataPoint2 from "../component/dataPoint2"
 
-const url = 'http://localhost:5005/api/stocks/'
+const url = process.env.NEXT_PUBLIC_URL
 
 const inputStyle: CSSProperties = {
   marginTop: '10px',
