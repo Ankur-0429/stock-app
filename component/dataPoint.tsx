@@ -140,6 +140,8 @@ const DataPoint = ({ data, theme, log }: any) => {
             color: !theme ? '#696969' : '#E6E6FA'
           },
           stacked: false,
+          min: Math.min(...labelD) - 10 * Math.min(...labelD),
+          max: Math.max(...labelD),
         },
 
         volume: {
@@ -147,7 +149,7 @@ const DataPoint = ({ data, theme, log }: any) => {
           display: true,
           position: 'right',
           min: Math.min(...labelV),
-          max: Math.max(...labelV)*4,
+          max: Math.max(...labelV)*10,
 
         }
       }

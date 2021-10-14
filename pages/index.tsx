@@ -11,6 +11,7 @@
 
 import React, { CSSProperties, useState } from 'react'
 import DataPoint from '../component/dataPoint'
+import DataPoint2 from '../component/dataPoint2'
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "../component/globalStyles";
 import { lightTheme, darkTheme } from "../component/theme"
@@ -94,7 +95,7 @@ function App() {
           <ToggleSwitch label=" " th={themeToggler} />
         </div>
         <div>
-          <DataPoint data={data} theme={theme} />
+          <DataPoint2 />
         </div>
         {/* Creates a set of buttons that set the range of the graph */}
         <div className={styles.container}>
