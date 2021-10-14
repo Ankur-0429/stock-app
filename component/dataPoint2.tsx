@@ -9,7 +9,8 @@ import {
   Legend,
   ComposedChart,
   ResponsiveContainer,
-  Bar
+  Bar,
+  Cell
 } from "recharts";
 
 const formatNumber = (value: number) => {
@@ -21,7 +22,9 @@ const processData = (data) => {
         let lejson = {
             date: data[i].date.substring(0, 10),
             close: data[i].close,
-            volume: data[i].volume
+            volume: data[i].volume,
+            // If the price goes down, volume bar is  red, else it's green
+            volcolor: data[i].close > data[i].open ? "#00FF00" : "#FF0000"
         }
         array.push(lejson)
     }
@@ -66,7 +69,13 @@ const DataPoint2 = ({ data, theme }: any) => {
         stroke="#82ca9d"
         yAxisId="right"
         fill="#82ca9d"
-      />
+      >
+          {
+              data.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={data[index].volcolor} stroke={data[index].volcolor} />
+            ))
+          }
+      </Bar>
       <Line
         type="monotone"
         dataKey="close"
