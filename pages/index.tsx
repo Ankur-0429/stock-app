@@ -17,11 +17,16 @@ import { lightTheme, darkTheme } from "../component/theme"
 import buttonStyle from '../styles/yearButton.module.css'
 import ToggleSwitch from '../component/toggleSwitch';
 import styles from '../styles/NavContainer.module.css'
-import SearchStyles from '../styles/SearchBar.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
+<<<<<<< HEAD
 const url = 'http://localhost:5005/api/stocks/'
+=======
+import DataPoint2 from "../component/dataPoint2"
+
+const url = process.env.NEXT_PUBLIC_URL
+>>>>>>> 6f62b4d7a6b7822dd4c6b790c12f1135677f045c
 
 const inputStyle: CSSProperties = {
   marginTop: '10px',
@@ -41,7 +46,7 @@ const container: CSSProperties = {
  */
 function App() {
   // Gets the symbol the price range from the specified year from our backend
-  
+
   /**
    * 
    * @param symbol The stock ticker we want to input the display on the chart
@@ -87,34 +92,16 @@ function App() {
             {/* Input the stock ticker to the graph and the year range*/}
 
             {/* @ts-ignore */}
-            <form onSubmit={handleSubmit}>
-              <div className={SearchStyles.wrap}>
-                <div className={SearchStyles.search}>
-                  <input
-                    placeholder="Stock Ticker"
-                    type="text"
-                    value={input}
-                    onInput={(e) => setInput((e.target as HTMLTextAreaElement).value)}
-                    className={SearchStyles.searchTerm}
-                    style={{ border: `3px solid ${blue}` }}
-                    id="input_text"
-                  ></input>
-                  <button
-                    type="submit"
-                    className={SearchStyles.searchButton}
-                    style={{ border: `1px solid ${blue}`, background: `${blue}` }}
-                  >
-                    <FontAwesomeIcon icon={faSearch} />
-                  </button>
-                </div>
-              </div>
+            <form onSubmit={handleSubmit} noValidate>
+              <input type="search" className="boxShadow" onInput={(e) => setInput((e.target as HTMLTextAreaElement).value)} required />
+              <button type="submit" className="fa"> <FontAwesomeIcon icon={faSearch} /> </button>
             </form>
           </div>
           {/* The toggle switch for selecting between light and dark mode */}
           <ToggleSwitch label=" " th={themeToggler} />
         </div>
         <div>
-          <DataPoint data={data} theme={theme} />
+          <DataPoint2 data={data} theme={theme}/>
         </div>
         {/* Creates a set of buttons that set the range of the graph */}
         <div className={styles.container}>
@@ -123,7 +110,7 @@ function App() {
               className={buttonStyle.yearButton}
               style={{ color: blue }}
               key={range}
-              onClick={() => fetcher(symbol, range)}>
+              onClick={()=>fetcher(symbol, range)}>
               {range}Y
             </button>
           })}

@@ -57,13 +57,12 @@ const DataPoint = ({ data, theme, log }: any) => {
   else {
     labelSymbol = data[0].symbol
   }
-  const volData = [40,42,45,32,4,5,1,2,4,5,6,66,23,44,12,44,66]
   // Here we can define the colors we want to display
   const darkGreen = '#009D00'
   const lightGreen = '#66FF00'
   const red = '#FF0000'
   const ruby = '#E0115F'
-  const lime = '#11E092'
+  // const lime = '#11E092'
   // If we ever want to add more colors we can easily expand this
   const colorpairs = [[lightGreen, darkGreen], [ruby, red], [red, red]]
 
@@ -135,6 +134,8 @@ const DataPoint = ({ data, theme, log }: any) => {
             color: !theme ? '#696969' : '#E6E6FA'
           },
           stacked: false,
+          min: Math.min(...labelD) - 10 * Math.min(...labelD),
+          max: Math.max(...labelD),
         },
 
         volume: {
