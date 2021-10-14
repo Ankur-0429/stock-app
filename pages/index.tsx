@@ -19,14 +19,9 @@ import ToggleSwitch from '../component/toggleSwitch';
 import styles from '../styles/NavContainer.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-
-<<<<<<< HEAD
-const url = 'http://localhost:5005/api/stocks/'
-=======
 import DataPoint2 from "../component/dataPoint2"
 
-const url = process.env.NEXT_PUBLIC_URL
->>>>>>> 6f62b4d7a6b7822dd4c6b790c12f1135677f045c
+const url = 'http://localhost:5005/api/stocks/'
 
 const inputStyle: CSSProperties = {
   marginTop: '10px',
