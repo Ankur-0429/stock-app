@@ -12,9 +12,11 @@
  * 
  */
 
-import { faLevelUpAlt } from '@fortawesome/free-solid-svg-icons';
-import React from 'react';
 import { Bar, Line } from "react-chartjs-2"
+import React from 'react'
+import buttonStyle from '../styles/yearButton.module.css'
+import styles from '../styles/NavContainer.module.css'
+import { fetcher } from "../pages/api/yahoo"
 
 /**
  * 
@@ -34,8 +36,8 @@ const grabArr = (data) => {
   return [labelArr.reverse(), labelD.reverse(), labelV.reverse()]
 }
 
-/** @internal */
-const secret = 'Ankur is gay'
+const buttonPadding = "100px"
+const years = [20, 10, 5, 3, 1]
 
 /**
  * 
@@ -43,7 +45,7 @@ const secret = 'Ankur is gay'
  * @param theme a boolean that deterimines if theme is dark mode or light mode and selects the colors
  * @returns the cleaned data and the options for Chart.js
  */
-const DataPoint = ({ data, theme }: any) => {
+const DataPoint = ({ data, setData, theme, symbol }: any) => {
   let temp = grabArr(data)
   const labelArr = temp[0]
   const labelD = temp[1]
@@ -83,7 +85,16 @@ const DataPoint = ({ data, theme }: any) => {
 
       datasets: [
         {
-          label: labelSymbol + (ifNaN ? '' : ` (${positive}${percentChange}%)`),
+          label: "Volume",
+          data: labelV,
+          borderColor: red,
+          backgroundColor: red,
+          type: 'bar',
+          order: 2,
+          yAxisID: 'volume',
+        },
+        {
+          label: labelSymbol,
           fill: false,
           lineTension: 0.1,
           backgroundColor: themeColor,
@@ -100,13 +111,19 @@ const DataPoint = ({ data, theme }: any) => {
           pointHoverBackgroundColor: themeColor,
           pointHoverBorderColor: themeColor,
           pointHoverBorderWidth: 2,
-          pointRadius: 0.1,
-          pointHitRadius: 5,
-          data: labelD
+          pointRadius: 1,
+          pointHitRadius: 1000,
+          data: labelD,
+          order: 1,
+          yAxisID: 'y',
         }
+
       ]
     },
     options: {
+      interaction: {
+        axis: 'x'
+      },
       maintainAspectRatio: false,
       scales: {
         x: {
@@ -124,62 +141,42 @@ const DataPoint = ({ data, theme }: any) => {
           grid: {
             color: theme ? '#909090' : '#696969'
           }
-        }
-      }
-    }
-  }
-  const graph2 = {
-    data: {
-      labels: labelArr,
-
-      datasets: [
-        {
-          label: 'volume',
-          data: labelV,
-          borderColor: red,
-          backgroundColor: red,
-        }
-      ]
-    },
-    options: {
-      scaleShowLabels: false,
-      maintainAspectRatio: false,
-      scales: {
-        x: {
-          ticks: {
-            display: false,
-          },
-          grid: {
-            display: false,
-          }
         },
-        y: {
-          ticks: {
-            display: false,
-            scaleShowLabels: false,
-          },
-          grid: {
-            display: false,
-            color: theme ? '#909090' : '#696969'
-          }
+        volume: {
+          type: "linear",
+          display: true,
+          position: 'right',
+          min: Math.min(...labelV),
+          max: Math.max(...labelV) * 10,
+
         }
       }
     }
-
   }
 
   return (<>
-    <div style={{ height: "70vh" }}>
+    <div>
       <Line
+        // @ts-ignore
         data={graph.data}
+        // @ts-ignore
         options={graph.options}
       />
     </div>
-    <div style={{ height: "20vh", paddingLeft: '26px'}}>
-      <Bar
-        data={graph2.data}
-        options={graph2.options}
-      />
+    {/* Creates a set of buttons that set the range of the graph */}
+    <div className={styles.container} style={{ paddingLeft: `${buttonPadding}`, paddingRight: `${buttonPadding}` }}>
+      {years.map((range) => {
+        return <button
+          className={buttonStyle.yearButton}
+          style={{ color: themeColor }}
+          key={range}
+          onClick={async () => {
+            let temp = await fetcher(symbol, range)
+            setData(temp)
+          }}>
+          {range}Y
+        </button>
+      })}
     </div>
   </>)
 }
