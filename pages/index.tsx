@@ -9,18 +9,24 @@
  */
 
 
-import React, { CSSProperties, useState } from 'react'
+import React, { CSSProperties, useContext, useState } from 'react'
 import DataPoint from '../component/dataPoint'
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "../component/globalStyles";
 import { lightTheme, darkTheme } from "../component/theme"
-import buttonStyle from '../styles/yearButton.module.css'
+
 import ToggleSwitch from '../component/toggleSwitch';
 import styles from '../styles/NavContainer.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { fetcher } from './api/yahoo';
+import { AppContext } from '../context/AppContext';
 
+
+// const symbols = ['aapl', 'tsla', 'aa', 'a', 'msft']
+
+const container: CSSProperties = {
+  marginLeft: '10px',
+}
 
 /**
  * This is the driver function that locates where our chart, buttons, and input is.
@@ -28,29 +34,28 @@ import { fetcher } from './api/yahoo';
  * 
  */
 function App() {
-  // Gets the symbol the price range from the specified year from our backend
-
   /**
    * 
-   * @param e The event object used to handle button output for timeline
+   * @param symbol The stock ticker we want to input the display on the chart
+   * @param year The range we want to define for the chart
+   * @event res Sends a query to our backend to request the data we want
    * 
    */
-  async function handleSubmit(e: Event) {
+
+  /**
+ * 
+ * @param e The event object used to handle button output for timeline
+ * 
+ */
+  const handleSubmit = (e: Event) => {
     e.preventDefault()
     setSymbol(input)
-    let temp = await fetcher(input, 20)
-    setData(temp)
   }
 
-  const [symbol, setSymbol] = useState('aapl')
-  const [input, setInput] = useState('')
-  const [data, setData] = useState('')
-
-  const lightBlue = "#87CEEB"
-  const darkBlue = "#3700B3"
-
-  const [theme, setTheme] = useState(true);
-  const blue = theme ? lightBlue : darkBlue
+  const [symbol, setSymbol] = useState('')
+  const [input, setInput] = useState("")
+  const [theme, setTheme] = useState(true)
+  // Set these two values with useContext
 
   const themeToggler = () => {
     setTheme(!theme)
@@ -60,24 +65,27 @@ function App() {
     // Selects between light and dark themes based on a slider button
     <ThemeProvider theme={theme ? lightTheme : darkTheme}>
       <GlobalStyles />
-      <div className={styles.container}>
-        <div>
-          {/* Input the stock ticker to the graph and the year range*/}
-
-          {/* @ts-ignore */}
-          <form onSubmit={handleSubmit} noValidate>
-            <input type="search" className="boxShadow" onInput={(e) => setInput((e.target as HTMLTextAreaElement).value)} required />
-            <button type="submit" className="fa"> <FontAwesomeIcon icon={faSearch} /> </button>
-          </form>
-        </div>
-        {/* The toggle switch for selecting between light and dark mode */}
-        <ToggleSwitch label=" " th={themeToggler} />
-      </div>
 
       <main className='App'>
-        <div>
-          <DataPoint data={data} setData={setData} theme={theme} symbol={symbol} />
+        <div className={styles.container}>
+          <div style={container}>
+            {/* Input the stock ticker to the graph and the year range*/}
+
+            {/* @ts-ignore */}
+            <form onSubmit={handleSubmit} noValidate>
+              <input type="search" className="boxShadow" onInput={(e) => setInput((e.target as HTMLTextAreaElement).value)} required />
+              <button type="submit" className="fa"> <FontAwesomeIcon icon={faSearch} /> </button>
+            </form>
+          </div>
+          {/* The toggle switch for selecting between light and dark mode */}
+          <ToggleSwitch label=" " th={themeToggler} />
         </div>
+        <div>
+          <DataPoint symbol={symbol} theme={theme} />
+        </div>
+        {/* {symbols.map((s) => {
+          return <DataPoint symbol={s} theme={theme} />
+        })} */}
       </main>
     </ThemeProvider>
   )

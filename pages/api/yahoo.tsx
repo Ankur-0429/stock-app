@@ -5,8 +5,9 @@
    * @event res Sends a query to our backend to request the data we want
    * 
 */
-export async function fetcher(symbol:string, year:number) {
-    let res:Response = await fetch(process.env.NEXT_PUBLIC_URL + "" + year + "/query/?symbol=" + symbol)
-    let data = res.json()
-    return data
+
+export function fetcher(symbol:string="aapl", year:number=20) {  
+    fetch(process.env.NEXT_PUBLIC_URL + year + "/query/?symbol=" + symbol)
+        .then((res)=>res.json())
+        .then((data)=>{return data})
 }
