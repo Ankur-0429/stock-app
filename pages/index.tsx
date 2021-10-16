@@ -10,7 +10,6 @@
 
 
 import React, { CSSProperties, useState } from 'react'
-import DataPoint from '../component/dataPoint'
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "../component/globalStyles";
 import { lightTheme, darkTheme } from "../component/theme"
@@ -19,7 +18,6 @@ import ToggleSwitch from '../component/toggleSwitch';
 import styles from '../styles/NavContainer.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-
 import DataPoint2 from "../component/dataPoint2"
 import DataPoint3 from '../component/dataPoint3';
 const url = process.env.NEXT_PUBLIC_URL
@@ -35,6 +33,7 @@ const container: CSSProperties = {
 }
 
 /**
+ * 
  * This is the driver function that locates where our chart, buttons, and input is.
  * 
  * 

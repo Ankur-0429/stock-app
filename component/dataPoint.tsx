@@ -7,10 +7,6 @@
  *  - Main Author: Ankur Ahir
  *  - Co Author: Albert Lee
  * 
- *  
- * 
- *
- * 
  */
 
 import React from 'react';
@@ -45,7 +41,6 @@ const DataPoint = ({ data, theme, log }: any) => {
   const labelArr = temp[0]
   const labelD = temp[1]
   const labelV = temp[2]
-
   const percentChange = Math.round(((labelD[labelD.length - 1] - labelD[0]) / labelD[labelD.length - 1]) * 100)
   let ifNaN = isNaN(percentChange)
   let ifPositive = percentChange > 0
@@ -80,7 +75,6 @@ const DataPoint = ({ data, theme, log }: any) => {
 
       datasets: [
         {
-          label: "Volume",
           data: labelV,
           borderColor: red,
           backgroundColor: red,
@@ -150,7 +144,7 @@ const DataPoint = ({ data, theme, log }: any) => {
           display: true,
           position: 'right',
           min: Math.min(...labelV),
-          max: Math.max(...labelV)*10,
+          max: Math.max(...labelV)*3,
 
         }
       }
