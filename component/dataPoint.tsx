@@ -1,3 +1,4 @@
+
 /**
  *  # dataPoint.tsx
  *  The purpose of this file is to define a function to take in data, and a theme, to display using Chart.js
@@ -157,7 +158,7 @@ const DataPoint = ({ data, theme, log }: any) => {
   }
 
   return (
-    <div style={{ height: "70vh" }}>
+    <div style={{ height: "70vh" }}>c
       <Line
         data={graph.data}
         options={graph.options}

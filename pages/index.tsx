@@ -21,7 +21,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import DataPoint2 from "../component/dataPoint2"
-
+import DataPoint3 from '../component/dataPoint3';
 const url = process.env.NEXT_PUBLIC_URL
 
 const inputStyle: CSSProperties = {
