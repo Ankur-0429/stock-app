@@ -12,16 +12,18 @@
  * 
  */
 
-import { faLevelUpAlt } from '@fortawesome/free-solid-svg-icons';
-import React from 'react';
-import { Bar, Line } from "react-chartjs-2"
+import { useEffect, useState } from 'react';
+import { Line } from "react-chartjs-2"
+import buttonStyle from '../styles/yearButton.module.css';
+import styles from '../styles/NavContainer.module.css';
 
-/**
- * 
- * @param data the raw data sent by the backend
- * @returns data sorted by closing price and date
- * 
- */
+
+export function fetcher(symbol, period, setData) {
+  fetch(process.env.NEXT_PUBLIC_URL + period + "/query?symbol=" + symbol)
+    .then((res) => res.json())
+    .then((data) => setData(data))
+}
+
 const grabArr = (data) => {
   let labelArr = []
   let labelD = []
@@ -34,36 +36,24 @@ const grabArr = (data) => {
   return [labelArr.reverse(), labelD.reverse(), labelV.reverse()]
 }
 
-/** @internal */
-const secret = 'Ankur is gay'
+const DataPoint = ({ symbol, theme }) => {
+  const [data, setData] = useState([])
 
-/**
- * 
- * @param data the cleaned data given by grabArr
- * @param theme a boolean that deterimines if theme is dark mode or light mode and selects the colors
- * @returns the cleaned data and the options for Chart.js
- */
-const DataPoint = ({ data, theme }: any) => {
+  useEffect(() => { fetcher(symbol, 20, setData) }, [symbol])
+
+
+  const buttonPadding = "100px"
+  const years = [20, 10, 5, 3, 1]
+
   let temp = grabArr(data)
   const labelArr = temp[0]
   const labelD = temp[1]
   const labelV = temp[2]
-  const percentChange = Math.round(((labelD[labelD.length - 1] - labelD[0]) / labelD[labelD.length - 1]) * 100)
-  let ifNaN = isNaN(percentChange)
-  let ifPositive = percentChange > 0
-  let positive = ifPositive ? '+' : ''
+
   let colorIndex = 0
 
   if (labelD[0] > labelD[labelD.length - 1]) {
     colorIndex = 1
-  }
-
-  let labelSymbol = ''
-  if (data.length == 0) {
-    labelSymbol = 'N/A'
-  }
-  else {
-    labelSymbol = data[0].symbol
   }
 
   // Here we can define the colors we want to display
@@ -77,13 +67,22 @@ const DataPoint = ({ data, theme }: any) => {
 
   // Choose a color pair based on the index and switch between themes easily
   const themeColor = colorpairs[colorIndex][theme ? 1 : 0]
+
   const graph = {
     data: {
       labels: labelArr,
 
       datasets: [
         {
-          label: labelSymbol + (ifNaN ? '' : ` (${positive}${percentChange}%)`),
+          data: labelV,
+          borderColor: red,
+          backgroundColor: red,
+          type: 'bar',
+          order: 2,
+          yAxisID: 'volume',
+        },
+        {
+          label: 'stock',
           fill: false,
           lineTension: 0.1,
           backgroundColor: themeColor,
@@ -100,14 +99,35 @@ const DataPoint = ({ data, theme }: any) => {
           pointHoverBackgroundColor: themeColor,
           pointHoverBorderColor: themeColor,
           pointHoverBorderWidth: 2,
-          pointRadius: 0.1,
-          pointHitRadius: 5,
-          data: labelD
+          pointRadius: 1,
+          pointHitRadius: 1000,
+          data: labelD,
+          order: 1,
+          yAxisID: 'y',
         }
+
       ]
     },
     options: {
-      maintainAspectRatio: false,
+      interaction: {
+        axis: 'x'
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: "",
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          callbacks: {
+            label: function (tooltipItem) {
+              return tooltipItem.yLabel;
+            }
+          }
+        },
+      },
       scales: {
         x: {
           ticks: {
@@ -117,69 +137,49 @@ const DataPoint = ({ data, theme }: any) => {
             display: false
           }
         },
-        y: {
-          ticks: {
-            display: true,
-          },
-          grid: {
-            color: theme ? '#909090' : '#696969'
-          }
-        }
-      }
-    }
-  }
-  const graph2 = {
-    data: {
-      labels: labelArr,
 
-      datasets: [
-        {
-          label: 'volume',
-          data: labelV,
-          borderColor: red,
-          backgroundColor: red,
-        }
-      ]
-    },
-    options: {
-      scaleShowLabels: false,
-      maintainAspectRatio: false,
-      scales: {
-        x: {
-          ticks: {
-            display: false,
-          },
+        y: {
+          type: "linear",
           grid: {
-            display: false,
-          }
+            color: !theme ? '#696969' : '#E6E6FA'
+          },
+          ticks: {
+            display: true
+          },
+          stacked: false,
         },
-        y: {
-          ticks: {
-            display: false,
-            scaleShowLabels: false,
-          },
-          grid: {
-            display: false,
-            color: theme ? '#909090' : '#696969'
-          }
+
+        volume: {
+          type: "linear",
+          display: false,
+          position: 'right',
+          min: Math.min(...labelV),
+          max: Math.max(...labelV) * 10,
+
         }
       }
     }
-
   }
 
   return (<>
-    <div style={{ height: "70vh" }}>
-      <Line
-        data={graph.data}
-        options={graph.options}
-      />
-    </div>
-    <div style={{ height: "20vh", paddingLeft: '26px'}}>
-      <Bar
-        data={graph2.data}
-        options={graph2.options}
-      />
+    <Line
+      // @ts-ignore
+      data={graph.data}
+      // @ts-ignore
+      options={graph.options}
+    />
+
+    {/* Creates a set of buttons that set the range of the graph */}
+    <div className={styles.container} style={{ paddingLeft: `${buttonPadding}`, paddingRight: `${buttonPadding}`, fontSize: "large" }}>
+      {years.map((range) => {
+        return <button
+          className={buttonStyle.yearButton}
+          style={{ color: themeColor }}
+          key={range}
+          onClick={() => fetcher(symbol, range, setData)}>
+          {range}Y
+        </button>
+      })}
     </div>
   </>)
 }
