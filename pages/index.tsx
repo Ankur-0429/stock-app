@@ -80,11 +80,7 @@
            {/* The toggle switch for selecting between light and dark mode */}
            <ToggleSwitch label=" " th={themeToggler} />
          </div>
-<<<<<<< HEAD
          <div style={{height: '90vh'}}>
-=======
-         <div>
->>>>>>> 60c42162eb01cbdd723909893d796dee6a696993
            <DataPoint symbol={symbol} theme={theme} />
          </div>
          {/* {symbols.map((s) => {

@@ -109,10 +109,7 @@ const DataPoint = ({ symbol, theme }) => {
       ]
     },
     options: {
-<<<<<<< HEAD
       maintainAspectRatio: false,
-=======
->>>>>>> 60c42162eb01cbdd723909893d796dee6a696993
       interaction: {
         axis: 'x'
       },
@@ -174,19 +171,11 @@ const DataPoint = ({ symbol, theme }) => {
     />
 
     {/* Creates a set of buttons that set the range of the graph */}
-<<<<<<< HEAD
     <div className={styles.container} style={{ marginLeft: `${buttonPadding}`, marginRight: `${buttonPadding}`, fontSize: "large" }}>
       {years.map((range) => {
         return <button
           className={buttonStyle.yearButton}
           style={{ color: themeColor, backgroundImage: `linear-gradient(${themeColor}, ${themeColor})` }}
-=======
-    <div className={styles.container} style={{ paddingLeft: `${buttonPadding}`, paddingRight: `${buttonPadding}`, fontSize: "large" }}>
-      {years.map((range) => {
-        return <button
-          className={buttonStyle.yearButton}
-          style={{ color: themeColor }}
->>>>>>> 60c42162eb01cbdd723909893d796dee6a696993
           key={range}
           onClick={() => fetcher(symbol, range, setData)}>
           {range}Y
