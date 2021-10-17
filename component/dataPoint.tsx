@@ -13,7 +13,7 @@
  */
 
 import { useEffect, useState } from 'react';
-import { Bar, Line } from "react-chartjs-2"
+import { Line } from "react-chartjs-2"
 import buttonStyle from '../styles/yearButton.module.css';
 import styles from '../styles/NavContainer.module.css';
 
@@ -36,11 +36,11 @@ const grabArr = (data) => {
   return [labelArr.reverse(), labelD.reverse(), labelV.reverse()]
 }
 
-const DataPoint = ({symbol, theme}) => {
+const DataPoint = ({ symbol, theme }) => {
   const [data, setData] = useState([])
 
   useEffect(() => { fetcher(symbol, 20, setData) }, [symbol])
-  
+
 
   const buttonPadding = "100px"
   const years = [20, 10, 5, 3, 1]
@@ -67,13 +67,22 @@ const DataPoint = ({symbol, theme}) => {
 
   // Choose a color pair based on the index and switch between themes easily
   const themeColor = colorpairs[colorIndex][theme ? 1 : 0]
+
   const graph = {
     data: {
       labels: labelArr,
 
       datasets: [
         {
-          label: 'Stock Value',
+          data: labelV,
+          borderColor: red,
+          backgroundColor: red,
+          type: 'bar',
+          order: 2,
+          yAxisID: 'volume',
+        },
+        {
+          label: 'stock',
           fill: false,
           lineTension: 0.1,
           backgroundColor: themeColor,
@@ -90,14 +99,35 @@ const DataPoint = ({symbol, theme}) => {
           pointHoverBackgroundColor: themeColor,
           pointHoverBorderColor: themeColor,
           pointHoverBorderWidth: 2,
-          pointRadius: 0.1,
-          pointHitRadius: 5,
-          data: labelD
+          pointRadius: 1,
+          pointHitRadius: 1000,
+          data: labelD,
+          order: 1,
+          yAxisID: 'y',
         }
+
       ]
     },
     options: {
-      maintainAspectRatio: false,
+      interaction: {
+        axis: 'x'
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: "",
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          callbacks: {
+            label: function (tooltipItem) {
+              return tooltipItem.yLabel;
+            }
+          }
+        },
+      },
       scales: {
         x: {
           ticks: {
@@ -107,70 +137,38 @@ const DataPoint = ({symbol, theme}) => {
             display: false
           }
         },
-        y: {
-          ticks: {
-            display: true,
-          },
-          grid: {
-            color: theme ? '#909090' : '#696969'
-          }
-        }
-      }
-    }
-  }
-  const graph2 = {
-    data: {
-      labels: labelArr,
 
-      datasets: [
-        {
-          label: 'volume',
-          data: labelV,
-          borderColor: red,
-          backgroundColor: red,
-        }
-      ]
-    },
-    options: {
-      scaleShowLabels: false,
-      maintainAspectRatio: false,
-      scales: {
-        x: {
-          ticks: {
-            display: false,
-          },
+        y: {
+          type: "linear",
           grid: {
-            display: false,
-          }
+            color: !theme ? '#696969' : '#E6E6FA'
+          },
+          ticks: {
+            display: true
+          },
+          stacked: false,
         },
-        y: {
-          ticks: {
-            display: false,
-            scaleShowLabels: false,
-          },
-          grid: {
-            display: false,
-            color: theme ? '#909090' : '#696969'
-          }
+
+        volume: {
+          type: "linear",
+          display: false,
+          position: 'right',
+          min: Math.min(...labelV),
+          max: Math.max(...labelV) * 10,
+
         }
       }
     }
-
   }
 
   return (<>
-    <div style={{ height: "70vh" }}>
-      <Line
-        data={graph.data}
-        options={graph.options}
-      />
-    </div>
-    <div style={{ height: "20vh", paddingLeft: '26px' }}>
-      <Bar
-        data={graph2.data}
-        options={graph2.options}
-      />
-    </div>
+    <Line
+      // @ts-ignore
+      data={graph.data}
+      // @ts-ignore
+      options={graph.options}
+    />
+
     {/* Creates a set of buttons that set the range of the graph */}
     <div className={styles.container} style={{ paddingLeft: `${buttonPadding}`, paddingRight: `${buttonPadding}`, fontSize: "large" }}>
       {years.map((range) => {
