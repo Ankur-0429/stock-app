@@ -19,7 +19,6 @@
  import styles from '../styles/NavContainer.module.css'
  import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
  import { faSearch } from '@fortawesome/free-solid-svg-icons';
- import { AppContext } from '../context/AppContext';
  
  
 //  const symbols = ['aapl', 'tsla', 'aa', 'a', 'msft']
@@ -80,7 +79,7 @@
            {/* The toggle switch for selecting between light and dark mode */}
            <ToggleSwitch label=" " th={themeToggler} />
          </div>
-         <div style={{height: '90vh'}}>
+         <div style={{height: '40vh'}}>
            <DataPoint symbol={symbol} theme={theme} />
          </div>
          {/* {symbols.map((s) => {
