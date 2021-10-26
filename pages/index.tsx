@@ -14,11 +14,13 @@ import DataPoint from '../component/dataPoint'
 import { ThemeProvider } from "styled-components";
 import { GlobalStyles } from "../component/globalStyles";
 import { lightTheme, darkTheme } from "../component/theme"
+import { useSelector } from 'react-redux';
 
 import ToggleSwitch from '../component/toggleSwitch';
 import styles from '../styles/NavContainer.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useWindowWidth } from '@react-hook/window-size'
 
 
 
@@ -52,29 +54,18 @@ function App() {
     setSymbol(input)
   }
 
-  const [width, setWidth] = useState<number>(window.innerWidth);
+  // @ts-ignore
+  const theme = useSelector(state=>state.swapTheme)
 
-  function handleWindowSizeChange() {
-    setWidth(window.innerWidth);
-  }
-  useEffect(() => {
-    window.addEventListener('resize', handleWindowSizeChange);
-    return () => {
-      window.removeEventListener('resize', handleWindowSizeChange);
-    }
-  }, []);
-
-  let isMobile: boolean = (width <= 768);
-
+  const onlyWidth = useWindowWidth()
+  const [ifMobile, setIfMobile] = useState(onlyWidth < 768)
+  useEffect(()=>{
+    setIfMobile(onlyWidth < 768)
+  })
 
   const [symbol, setSymbol] = useState('')
   const [input, setInput] = useState("")
-  const [theme, setTheme] = useState(true)
   // Set these two values with useContext
-
-  const themeToggler = () => {
-    setTheme(!theme)
-  }
 
   return (
     // Selects between light and dark themes based on a slider button
@@ -93,10 +84,10 @@ function App() {
             </form>
           </div>
           {/* The toggle switch for selecting between light and dark mode */}
-          <ToggleSwitch label=" " th={themeToggler} />
+          <ToggleSwitch />
         </div>
-        <div style={{ height: isMobile ? "45vh" : "85vh" }}>
-          <DataPoint symbol={symbol} theme={theme} />
+        <div style={{ height: ifMobile ? "45vh" : "85vh" }}>
+          <DataPoint symbol={symbol} />
         </div>
         {/* {symbols.map((s) => {
            return <DataPoint symbol={s} theme={theme} />

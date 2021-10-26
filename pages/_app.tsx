@@ -10,15 +10,19 @@
 
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import AppWrapper from '../context/AppContext'
+import { createStore } from 'redux'
+import { rootReducer } from '../component/redux/index'
+import { Provider } from 'react-redux'
+
+const store = createStore(rootReducer)
 
 function MyApp({ Component, pageProps }: AppProps) {
 
 
   return (<>
-    <AppWrapper>
+    <Provider store={store}>
       <Component {...pageProps} />
-    </AppWrapper>
+    </Provider>
   </>)
 }
 export default MyApp

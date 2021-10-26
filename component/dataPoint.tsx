@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 import { Line } from "react-chartjs-2"
 import buttonStyle from '../styles/yearButton.module.css';
 import styles from '../styles/NavContainer.module.css';
-
+import { useSelector } from 'react-redux';
 
 export function fetcher(symbol, period, setData) {
   fetch(process.env.NEXT_PUBLIC_URL + period + "/query?symbol=" + symbol)
@@ -36,8 +36,10 @@ const grabArr = (data) => {
   return [labelArr.reverse(), labelD.reverse(), labelV.reverse()]
 }
 
-const DataPoint = ({ symbol, theme }) => {
+const DataPoint = ({ symbol }) => {
   const [data, setData] = useState([])
+  // @ts-ignore
+  const theme = useSelector(state=>state.swapTheme)
 
   useEffect(() => { fetcher(symbol, 20, setData) }, [symbol])
 

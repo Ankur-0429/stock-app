@@ -9,6 +9,9 @@
 
 import React from "react";
 import styles from '../styles/ToggleSwitch.module.css'
+import { useDispatch } from 'react-redux';
+import { switchTheme } from './redux/action/index'
+
 
 /**
  * 
@@ -16,14 +19,15 @@ import styles from '../styles/ToggleSwitch.module.css'
  * @param th
  * @returns 
  */
-const ToggleSwitch = ({label, th}) => {
+ const ToggleSwitch = () => {
+    const dispatch = useDispatch()
     return (
     <div className={styles.container}>
-        {label}{" "}
+        {" "}{" "}
         <div className={styles.toggleSwitch}>
             <input type="checkbox" className={styles.checkbox}
-                name={label} id={label}  onClick={th} />
-            <label className={styles.label} htmlFor={label}>
+                name={" "} id={" "}  onClick={()=>dispatch(switchTheme())} />
+            <label className={styles.label} htmlFor={" "}>
                 <span className={styles.inner} />
                 <span className={styles.switch} />
             </label>
